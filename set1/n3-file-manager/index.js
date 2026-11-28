@@ -70,3 +70,15 @@ function updateFile(fileName, content) {
     fs.appendFileSync(filePath, `\n${content}`);
     console.log(`File updated successfully: ${fileName}`);
 }
+
+// Deletes an existing file
+function deleteFile(fileName) {
+    const filePath = getFilePath(fileName);
+
+    if (!fs.existsSync(filePath)) {
+        throw new Error(`File not found: ${fileName}`);
+    }
+
+    fs.unlinkSync(filePath);
+    console.log(`File deleted successfully: ${fileName}`);
+}
