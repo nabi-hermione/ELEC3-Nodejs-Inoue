@@ -108,3 +108,53 @@ function listFiles() {
 
     console.log("\n------------------------------");
 }
+
+// Read command-line arguments
+const [command, fileName, ...contentParts] = process.argv.slice(2);
+const content = contentParts.join(" ");
+
+// Execute the selected file operation
+try {
+    switch (command) {
+        case "create":
+            if (!fileName || contentParts.length === 0) {
+                throw new Error('Usage: node index.js create <filename> "<content>"');
+            }
+            createFile(fileName, content);
+            break;
+
+        case "read":
+            if (!fileName) {
+                throw new Error("Please provide a file name.");
+            }
+            readFile(fileName);
+            break;
+
+        case "update":
+            if (!fileName || contentParts.length === 0) {
+                throw new Error('Usage: node index.js update <filename> "<text>"');
+            }
+            updateFile(fileName, content);
+            break;
+
+        case "delete":
+            if (!fileName) {
+                throw new Error("Please provide a file name.");
+            }
+            deleteFile(fileName);
+            break;
+
+        case "list":
+            listFiles();
+            break;
+
+        default:
+            console.log("Unknown command.");
+            console.log("Available commands: create, read, update, delete, list");
+            console.log('Example: node index.js create notes.txt "Hello world"');
+            process.exitCode = 1;
+    }
+} catch (error) {
+    console.log(`Error: ${error.message}`);
+    process.exitCode = 1;
+}
