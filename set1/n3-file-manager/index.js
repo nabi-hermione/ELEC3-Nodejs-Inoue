@@ -54,3 +54,19 @@ function readFile(fileName) {
     const content = fs.readFileSync(filePath, "utf8");
     console.log(`Contents of ${fileName}:\n${content}`);
 }
+
+// Appends content to an existing file
+function updateFile(fileName, content) {
+    const filePath = getFilePath(fileName);
+
+    if (!fs.existsSync(filePath)) {
+        throw new Error(`File not found: ${fileName}`);
+    }
+
+    if (!content.trim()) {
+        throw new Error("Please provide text to append.");
+    }
+
+    fs.appendFileSync(filePath, `\n${content}`);
+    console.log(`File updated successfully: ${fileName}`);
+}
