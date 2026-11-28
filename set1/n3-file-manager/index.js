@@ -82,3 +82,29 @@ function deleteFile(fileName) {
     fs.unlinkSync(filePath);
     console.log(`File deleted successfully: ${fileName}`);
 }
+
+// Displays all files and their details
+function listFiles() {
+    const fileNames = fs.readdirSync(FILES_DIR).filter(fileName => {
+        const filePath = path.join(FILES_DIR, fileName);
+        return fs.statSync(filePath).isFile();
+    });
+
+    if (fileNames.length === 0) {
+        console.log("No files found.");
+        return;
+    }
+
+    fileNames.forEach(fileName => {
+        const filePath = path.join(FILES_DIR, fileName);
+        const content = fs.readFileSync(filePath, "utf8");
+
+        console.log("\n------------------------------");
+        console.log(`Full path: ${filePath}`);
+        console.log(`File name: ${path.basename(filePath)}`);
+        console.log(`Extension: ${path.extname(filePath)}`);
+        console.log(`Contents:\n${content}`);
+    });
+
+    console.log("\n------------------------------");
+}
