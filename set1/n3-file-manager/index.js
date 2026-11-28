@@ -26,3 +26,19 @@ function getFilePath(fileName) {
 
     return path.join(FILES_DIR, fileName);
 }
+
+// Creates a new text file
+function createFile(fileName, content) {
+    const filePath = getFilePath(fileName);
+
+    if (!content.trim()) {
+        throw new Error("Please provide file content.");
+    }
+
+    if (fs.existsSync(filePath)) {
+        throw new Error("File already exists.");
+    }
+
+    fs.writeFileSync(filePath, content);
+    console.log(`File created successfully: ${fileName}`);
+}
