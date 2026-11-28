@@ -42,3 +42,15 @@ function createFile(fileName, content) {
     fs.writeFileSync(filePath, content);
     console.log(`File created successfully: ${fileName}`);
 }
+
+// Reads and displays file contents
+function readFile(fileName) {
+    const filePath = getFilePath(fileName);
+
+    if (!fs.existsSync(filePath)) {
+        throw new Error(`File not found: ${fileName}`);
+    }
+
+    const content = fs.readFileSync(filePath, "utf8");
+    console.log(`Contents of ${fileName}:\n${content}`);
+}
